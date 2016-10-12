@@ -49,10 +49,6 @@ class Dotpay_Dotpay_NotificationController extends Mage_Core_Controller_Front_Ac
     {
         $this->getPostParams();
         $this->getOrder();
-        $this->checkCurrency();
-        $this->checkAmount();
-        $this->checkEmail();
-        $this->checkSignature();
         $this->updatePaymentStatus();
     }
 
@@ -70,6 +66,11 @@ class Dotpay_Dotpay_NotificationController extends Mage_Core_Controller_Front_Ac
 
     private function setPaymentStatusCompleted(Mage_Sales_Model_Order_Payment $payment)
     {
+        $this->checkCurrency();
+        $this->checkAmount();
+        $this->checkEmail();
+        $this->checkSignature();
+
         if (!$payment->getTransaction($this->getTransactionId())) {
             $payment->setTransactionId($this->getTransactionId())
                 ->setCurrencyCode($payment->getOrder()->getBaseCurrencyCode())
